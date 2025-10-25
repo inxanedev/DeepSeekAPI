@@ -32,6 +32,12 @@ namespace inx::DeepSeek {
 		void AddMessage(const std::string& message);
 
 		/// <summary>
+		/// Adds a custom message to the history. You can define the role (system, user, assistant) yourself.
+		/// </summary>
+		/// <param name="message">The message to add</param>
+		void AddCustomMessage(const Message& message);
+
+		/// <summary>
 		/// Performs a blocking completion request to DeepSeek.
 		/// <para>It will use the message history from previous AddMessage calls.</para>
 		/// <para>After the request, the return message will be added to the history as well.</para>
