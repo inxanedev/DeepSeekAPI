@@ -4,6 +4,7 @@
 #include <vector>
 #include "DeepSeekMessage.h"
 #include "DeepSeekModel.h"
+#include "DeepSeekBalance.h"
 
 #pragma comment(lib, "Ws2_32.lib")
 #pragma comment(lib, "Advapi32.lib")
@@ -90,6 +91,12 @@ namespace inx::DeepSeek {
 		/// </summary>
 		/// <param name="model">The new model</param>
 		void SetModel(Model model);
+
+		/// <summary>
+		/// Performs a blocking request to get the balance for the provided API key.
+		/// </summary>
+		/// <returns></returns>
+		Balance GetBalance();
 	private:
 		std::string APIKey, SystemPrompt;
 		std::vector<Message> History;

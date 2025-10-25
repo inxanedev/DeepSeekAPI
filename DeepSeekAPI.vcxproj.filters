@@ -597,6 +597,9 @@
     <ClInclude Include="ext\curl\lib\ws.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\DeepSeekBalance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DeepSeekAPI.cpp">

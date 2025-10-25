@@ -114,3 +114,35 @@ void inx::DeepSeek::API::SetModel(Model model)
 {
 	SelectedModel = model;
 }
+
+inx::DeepSeek::Balance inx::DeepSeek::API::GetBalance()
+{
+	CURL* curl = curl_easy_init();
+	if (!curl) {
+		throw std::runtime_error("Failed to initialize CURL");
+	}
+	std::string url = "https://api.deepseek.com/user/balance";
+	std::string response_string;
+	struct curl_slist* headers = nullptr;
+	std::string auth_header = "Authorization: Bearer " + APIKey;
+	headers = curl_slist_append(headers, auth_header.c_str());
+	headers = curl_slist_append(headers, "Accept: application/json");
+	curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+	curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response_string);
+	CURLcode res = curl_easy_perform(curl);
+	curl_slist_free_all(headers);
+	curl_easy_cleanup(curl);
+	if (res != CURLE_OK) {
+		throw std::runtime_error("CURL request failed: " + std::string(curl_easy_strerror(res)));
+	}
+	nlohmann::json json_response = nlohmann::json::parse(response_string);
+	Balance balance;
+	balance.IsAvailable = json_response["is_available"].get<bool>();
+	balance.Currency = json_response["balance_infos"][0]["currency"].get<std::string>();
+	balance.TotalBalance = std::stod(json_response["balance_infos"][0]["total_balance"].get<std::string>());
+	balance.GrantedBalance = std::stod(json_response["balance_infos"][0]["granted_balance"].get<std::string>());
+	balance.ToppedUpBalance = std::stod(json_response["balance_infos"][0]["topped_up_balance"].get<std::string>());
+	return balance;
+}

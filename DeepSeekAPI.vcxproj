@@ -211,6 +211,7 @@
     <ClInclude Include="ext\curl\lib\ws.h" />
     <ClInclude Include="ext\nlohmann\json.hpp" />
     <ClInclude Include="include\DeepSeekAPI.h" />
+    <ClInclude Include="include\DeepSeekBalance.h" />
     <ClInclude Include="include\DeepSeekMessage.h" />
     <ClInclude Include="include\DeepSeekModel.h" />
   </ItemGroup>
