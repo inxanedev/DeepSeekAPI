@@ -28,6 +28,22 @@ namespace inx::DeepSeek {
 		API(std::string_view api_key, Model model, std::string_view system_prompt);
 
 		/// <summary>
+		/// Performs a single blocking completion request to DeepSeek without creating an instance of the API class.
+		/// <para>This is a static method, so you don't have to create an instance to use this.</para>
+		/// <para>It creates its own message history containing only the system prompt and the user message.</para>
+		/// <para>Note that this function simply creates a temporary API instance internally, so this doesn't provide any performance benefits over creating an instance yourself.</para>
+		/// </summary>
+		/// <param name="api_key">Your API key from https://platform.deepseek.com/api_keys</param>
+		/// <param name="model">The model to use for completion</param>
+		/// <param name="system_prompt">The system prompt (it will be added as the first system message)</param>
+		/// <param name="user_message">The message to send to the API.</param>
+		/// <param name="max_tokens">Optional: The maximum amount of tokens for the completion.</param>
+		/// <param name="temperature">Optional: The temperature for the completion.</param>
+		/// <param name="top_p">Optional: The top_p value for the completion.</param>
+		/// <returns>The AI's response.</returns>
+		static std::string SingleRequest(const std::string& api_key, Model model, const std::string& system_prompt, const std::string& user_message, std::optional<int> max_tokens = {}, std::optional<double> temperature = {}, std::optional<double> top_p = {});
+
+		/// <summary>
 		/// Adds your message to the history.
 		/// <para>Usually, you'd call GetCompletion after this.</para>
 		/// </summary>

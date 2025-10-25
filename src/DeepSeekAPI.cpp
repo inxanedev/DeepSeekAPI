@@ -9,6 +9,21 @@ inx::DeepSeek::API::API(std::string_view api_key, Model model, std::string_view 
 	ResetMessageHistory();
 }
 
+std::string inx::DeepSeek::API::SingleRequest(const std::string& api_key, Model model, const std::string& system_prompt, const std::string& user_message, std::optional<int> max_tokens, std::optional<double> temperature, std::optional<double> top_p)
+{
+	inx::DeepSeek::API instance(api_key, model, system_prompt);
+	if (max_tokens.has_value()) {
+		instance.SetMaxTokens(max_tokens);
+	}
+	if (temperature.has_value()) {
+		instance.SetTemperature(temperature);
+	}
+	if (top_p.has_value()) {
+		instance.SetTopP(top_p);
+	}
+	return instance.AddMessageAndGetCompletion(user_message);
+}
+
 void inx::DeepSeek::API::AddMessage(const std::string& message)
 {
 	History.emplace_back(Message::Role::User, message);
