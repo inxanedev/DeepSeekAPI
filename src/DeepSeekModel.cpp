@@ -7,5 +7,7 @@ std::string inx::DeepSeek::ModelToString(inx::DeepSeek::Model model)
 		return "deepseek-chat";
 	case inx::DeepSeek::Model::DeepSeekReasoner:
 		return "deepseek-reasoner";
+	default: // only adding this to avoid compiler warnings
+		return "deepseek-chat";
 	}
 }

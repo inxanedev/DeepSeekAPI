@@ -9,6 +9,8 @@ std::string RoleToString(inx::DeepSeek::Message::Role role)
 		return "user";
 	case inx::DeepSeek::Message::Role::Assistant:
 		return "assistant";
+	default: // only adding this to avoid compiler warnings
+		return "user";
 	}
 }
 
