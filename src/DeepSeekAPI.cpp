@@ -1,10 +1,11 @@
 #include "DeepSeekAPI.h"
 #include <curl/curl.h>
 
-inx::DeepSeek::API::API(std::string_view api_key, std::string_view system_prompt)
+inx::DeepSeek::API::API(std::string_view api_key, Model model, std::string_view system_prompt)
 {
 	APIKey = api_key;
 	SystemPrompt = system_prompt;
+    SelectedModel = model;
 	ResetMessageHistory();
 }
 
@@ -18,10 +19,10 @@ void inx::DeepSeek::API::AddCustomMessage(const Message& message)
 	History.push_back(message);
 }
 
-std::string inx::DeepSeek::API::AddMessageAndGetCompletion(Model model, const std::string& message)
+std::string inx::DeepSeek::API::AddMessageAndGetCompletion(const std::string& message)
 {
 	AddMessage(message);
-	return GetCompletion(model);
+	return GetCompletion();
 }
 
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
@@ -31,7 +32,7 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
     return totalSize;
 }
 
-std::string inx::DeepSeek::API::GetCompletion(Model model) {
+std::string inx::DeepSeek::API::GetCompletion() {
     CURL* curl = curl_easy_init();
     if (!curl) {
         throw std::runtime_error("Failed to initialize CURL");
@@ -42,7 +43,7 @@ std::string inx::DeepSeek::API::GetCompletion(Model model) {
     std::string body_str;
 
     nlohmann::json body;
-    body["model"] = ModelToString(model);
+    body["model"] = ModelToString(SelectedModel);
 
     nlohmann::json messages = nlohmann::json::array();
     for (const auto& message : History) {
@@ -80,12 +81,12 @@ std::string inx::DeepSeek::API::GetCompletion(Model model) {
     return response_message;
 }
 
-std::string inx::DeepSeek::API::GetSingleCompletion(Model model, const std::string& system_prompt, const std::string& user_message)
+std::string inx::DeepSeek::API::GetSingleCompletion(const std::string& system_prompt, const std::string& user_message)
 {
     std::vector<Message> previous_history = History;
 	ResetMessageHistory(system_prompt);
 	AddMessage(user_message);
-	std::string response = GetCompletion(model);
+	std::string response = GetCompletion();
 	History = previous_history;
 	return response;
 }
@@ -107,4 +108,9 @@ void inx::DeepSeek::API::ResetMessageHistory(std::optional<std::string> new_syst
 const std::vector<inx::DeepSeek::Message>& inx::DeepSeek::API::GetMessageHistory() const
 {
 	return History;
+}
+
+void inx::DeepSeek::API::SetModel(Model model)
+{
+	SelectedModel = model;
 }

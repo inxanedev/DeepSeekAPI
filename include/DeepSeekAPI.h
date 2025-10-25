@@ -22,8 +22,9 @@ namespace inx::DeepSeek {
 		/// Instantiates the DeepSeek API wrapper.
 		/// </summary>
 		/// <param name="api_key">Your API key from https://platform.deepseek.com/api_keys</param>
+		/// <param name="model">The model to use for completions</param>
 		/// <param name="system_prompt">The system prompt (it will be added as the first system message)</param>
-		API(std::string_view api_key, std::string_view system_prompt);
+		API(std::string_view api_key, Model model, std::string_view system_prompt);
 
 		/// <summary>
 		/// Adds your message to the history.
@@ -42,30 +43,27 @@ namespace inx::DeepSeek {
 		/// Adds the message to the history and calls GetCompletion for you.
 		/// <para>This is a convenience function combining AddMessage and GetCompletion.</para>
 		/// </summary>
-		/// <param name="model">The model to use for the completion.</param>
 		/// <param name="message">The message</param>
 		/// <returns></returns>
-		std::string AddMessageAndGetCompletion(Model model, const std::string& message);
+		std::string AddMessageAndGetCompletion(const std::string& message);
 
 		/// <summary>
 		/// Performs a blocking completion request to DeepSeek.
 		/// <para>It will use the message history from previous AddMessage calls.</para>
 		/// <para>After the request, the return message will be added to the history as well.</para>
 		/// </summary>
-		/// <param name="model">The model to use for the completion.</param>
 		/// <returns>The AI's response</returns>
-		std::string GetCompletion(Model model);
+		std::string GetCompletion();
 
 		/// <summary>
 		/// Performs a blocking completion request to DeepSeek.
 		/// <para>It will not read any message history, this function creates its own, containing only the system prompt and the provided message.</para>
 		/// <para>This is intended for single-turn interactions without maintaining state.</para>
 		/// </summary>
-		/// <param name="model">The model to use for the completion.</param>
 		/// <param name="system_prompt">The system prompt</param>
 		/// <param name="user_message">The user message</param>
 		/// <returns></returns>
-		std::string GetSingleCompletion(Model model, const std::string& system_prompt, const std::string& user_message);
+		std::string GetSingleCompletion(const std::string& system_prompt, const std::string& user_message);
 
 		/// <summary>
 		/// Overwrites the message history with your own one.
@@ -86,8 +84,15 @@ namespace inx::DeepSeek {
 		/// </summary>
 		/// <returns></returns>
 		const std::vector<Message>& GetMessageHistory() const;
+
+		/// <summary>
+		/// Changes the model used for completions.
+		/// </summary>
+		/// <param name="model">The new model</param>
+		void SetModel(Model model);
 	private:
 		std::string APIKey, SystemPrompt;
 		std::vector<Message> History;
+		Model SelectedModel;
 	};
 }
