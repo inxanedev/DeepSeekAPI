@@ -10,10 +10,10 @@ It uses `libcurl` for networking, and `nlohmann-json` for JSON support.
 
 using namespace inx::DeepSeek;
 
-API api("your_api_key_here", "You are a helpful assistant.");
+API api("your_api_key_here", Model::DeepSeekChat, "You are a helpful assistant.");
 api.AddMessage("What's 2 + 2?");
 
-std::string response = api.GetCompletion(Model::DeepSeekChat);
+std::string response = api.GetCompletion();
 ```
 
 # building
