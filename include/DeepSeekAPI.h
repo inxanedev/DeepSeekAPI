@@ -1,0 +1,59 @@
+#pragma once
+
+#include <string>
+#include <vector>
+#include "DeepSeekMessage.h"
+#include "DeepSeekModel.h"
+
+#pragma comment(lib, "Ws2_32.lib")
+#pragma comment(lib, "Advapi32.lib")
+#pragma comment(lib, "Crypt32.lib")
+#ifdef _MSC_VER
+#pragma comment(lib, "Secur32.lib")
+#endif
+
+namespace inx::DeepSeek {
+	/// <summary>
+	/// The main class for interacting with the DeepSeek API.
+	/// </summary>
+	class API {
+	public:
+		/// <summary>
+		/// Instantiates the DeepSeek API wrapper.
+		/// </summary>
+		/// <param name="api_key">Your API key from https://platform.deepseek.com/api_keys</param>
+		/// <param name="system_prompt">The system prompt (it will be added as the first system message)</param>
+		API(std::string_view api_key, std::string_view system_prompt);
+
+		/// <summary>
+		/// Adds your message to the history.
+		/// </summary>
+		/// <param name="message">The message to add</param>
+		void AddMessage(const std::string& message);
+
+		/// <summary>
+		/// Performs a blocking completion request to DeepSeek.
+		/// <para>It will use the message history from previous AddMessage calls.</para>
+		/// <para>After the request, the return message will be added to the history as well.</para>
+		/// </summary>
+		/// <param name="model">The model to use for the completion.</param>
+		/// <returns>The AI's response</returns>
+		std::string GetCompletion(Model model);
+
+
+		/// <summary>
+		/// Resets the message history to only contain the system prompt.
+		/// </summary>
+		/// <param name="new_system_prompt">If provided, replaces the current system prompt with this new one.</param>
+		void ResetMessageHistory(std::optional<std::string> new_system_prompt = {});
+
+		/// <summary>
+		/// Returns a non-modifiable message history as an std::vector.
+		/// </summary>
+		/// <returns></returns>
+		const std::vector<Message>& GetMessageHistory() const;
+	private:
+		std::string APIKey, SystemPrompt;
+		std::vector<Message> History;
+	};
+}
