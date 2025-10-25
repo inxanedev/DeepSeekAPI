@@ -7,6 +7,7 @@ namespace inx::DeepSeek {
 	/// <summary>
 	/// Represents a message in the DeepSeek conversation.
 	/// <para>Used for a nice implementation of the message history.</para>
+	/// <para>It contains the role (author), and the content of the message.</para>
 	/// </summary>
 	class Message {
 	public:
