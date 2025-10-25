@@ -40,6 +40,17 @@ namespace inx::DeepSeek {
 		/// <returns>The AI's response</returns>
 		std::string GetCompletion(Model model);
 
+		/// <summary>
+		/// Performs a blocking completion request to DeepSeek.
+		/// <para>It will not read any message history, this function creates its own containing only the system prompt and the provided message.</para>
+		/// <para>This is intended for single-turn interactions without maintaining state.</para>
+		/// </summary>
+		/// <param name="model">The model to use for the completion.</param>
+		/// <param name="system_prompt">The system prompt</param>
+		/// <param name="user_message">The user message</param>
+		/// <returns></returns>
+		std::string GetSingleCompletion(Model model, const std::string& system_prompt, const std::string& user_message);
+
 
 		/// <summary>
 		/// Resets the message history to only contain the system prompt.
