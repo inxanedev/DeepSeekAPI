@@ -18,6 +18,12 @@ void inx::DeepSeek::API::AddCustomMessage(const Message& message)
 	History.push_back(message);
 }
 
+std::string inx::DeepSeek::API::AddMessageAndGetCompletion(Model model, const std::string& message)
+{
+	AddMessage(message);
+	return GetCompletion(model);
+}
+
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
     std::string* s = static_cast<std::string*>(userp);
     size_t totalSize = size * nmemb;

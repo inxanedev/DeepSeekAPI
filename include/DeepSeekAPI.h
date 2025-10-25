@@ -27,6 +27,7 @@ namespace inx::DeepSeek {
 
 		/// <summary>
 		/// Adds your message to the history.
+		/// <para>Usually, you'd call GetCompletion after this.</para>
 		/// </summary>
 		/// <param name="message">The message to add</param>
 		void AddMessage(const std::string& message);
@@ -36,6 +37,15 @@ namespace inx::DeepSeek {
 		/// </summary>
 		/// <param name="message">The message to add</param>
 		void AddCustomMessage(const Message& message);
+
+		/// <summary>
+		/// Adds the message to the history and calls GetCompletion for you.
+		/// <para>This is a convenience function combining AddMessage and GetCompletion.</para>
+		/// </summary>
+		/// <param name="model">The model to use for the completion.</param>
+		/// <param name="message">The message</param>
+		/// <returns></returns>
+		std::string AddMessageAndGetCompletion(Model model, const std::string& message);
 
 		/// <summary>
 		/// Performs a blocking completion request to DeepSeek.
@@ -48,7 +58,7 @@ namespace inx::DeepSeek {
 
 		/// <summary>
 		/// Performs a blocking completion request to DeepSeek.
-		/// <para>It will not read any message history, this function creates its own containing only the system prompt and the provided message.</para>
+		/// <para>It will not read any message history, this function creates its own, containing only the system prompt and the provided message.</para>
 		/// <para>This is intended for single-turn interactions without maintaining state.</para>
 		/// </summary>
 		/// <param name="model">The model to use for the completion.</param>
