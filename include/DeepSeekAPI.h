@@ -32,6 +32,7 @@ namespace inx::DeepSeek {
 		/// <para>This is a static method, so you don't have to create an instance to use this.</para>
 		/// <para>It creates its own message history containing only the system prompt and the user message.</para>
 		/// <para>Note that this function simply creates a temporary API instance internally, so this doesn't provide any performance benefits over creating an instance yourself.</para>
+		/// <para>This should only be used when you only want to perform a single request during the whole lifetime of your application.</para>
 		/// </summary>
 		/// <param name="api_key">Your API key from https://platform.deepseek.com/api_keys</param>
 		/// <param name="model">The model to use for completion</param>
