@@ -45,6 +45,16 @@ std::string inx::DeepSeek::API::GetCompletion() {
     nlohmann::json body;
     body["model"] = ModelToString(SelectedModel);
 
+	if (MaxTokens.has_value()) {
+		body["max_tokens"] = MaxTokens.value();
+	}
+	if (Temperature.has_value()) {
+		body["temperature"] = Temperature.value();
+	}
+	if (TopP.has_value()) {
+		body["top_p"] = TopP.value();
+	}
+
     nlohmann::json messages = nlohmann::json::array();
     for (const auto& message : History) {
         messages.push_back(message.ToJSON());

@@ -97,9 +97,34 @@ namespace inx::DeepSeek {
 		/// </summary>
 		/// <returns></returns>
 		Balance GetBalance();
+
+		/// <summary>
+		/// Set the maximum amount of tokens for the completion requests.
+		/// <para>You can leave it empty to stick with the default.</para>
+		/// <para>Find more information about this parameter here: https://api-docs.deepseek.com/api/create-chat-completion</para>
+		/// </summary>
+		void SetMaxTokens(std::optional<int> max_tokens = {}) { MaxTokens = max_tokens; }
+		/// <summary>
+		/// Sets the temperature for the completion requests.
+		/// <para>You can leave it empty to stick with the default (1)</para>
+		/// <para>Should only be between 0 and 2.</para>
+		/// <para>Find more information about this parameter here: https://api-docs.deepseek.com/api/create-chat-completion</para>
+		/// </summary>
+		void SetTemperature(std::optional<double> temperature = {}) { Temperature = temperature; }
+		/// <summary>
+		/// Sets the top_p value for the completion requests.
+		/// <para>You can leave it empty to stick with the default (1)</para>
+		/// <para>Should only be between 0 and 1.</para>
+		/// <para>Find more information about this parameter here: https://api-docs.deepseek.com/api/create-chat-completion</para>
+		/// </summary>
+		void SetTopP(std::optional<double> top_p = {}) { TopP = top_p; }
 	private:
 		std::string APIKey, SystemPrompt;
 		std::vector<Message> History;
 		Model SelectedModel;
+
+		std::optional<int> MaxTokens;
+		std::optional<double> Temperature;
+		std::optional<double> TopP;
 	};
 }
