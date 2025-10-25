@@ -4,6 +4,13 @@ This repository contains a C++ library that provides an simple, barebones interf
 It is meant to be compiled as a static library and used in other C++ projects.  
 
 It uses `libcurl` for networking, and `nlohmann-json` for JSON support.
+
+# docs
+You can view the Doxygen documentation here:  
+[Documentation](https://inxanedev.github.io/deepseekapi/docs/classinx_1_1_deep_seek_1_1_a_p_i.html)  
+Please note however, it might not always be up to date, since I have to do this manually.  
+It's always better to use IntelliSense to view the documentation while coding.
+
 # example
 ```cpp
 #include <DeepSeekAPI.h>
