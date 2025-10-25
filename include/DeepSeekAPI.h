@@ -51,6 +51,13 @@ namespace inx::DeepSeek {
 		/// <returns></returns>
 		std::string GetSingleCompletion(Model model, const std::string& system_prompt, const std::string& user_message);
 
+		/// <summary>
+		/// Overwrites the message history with your own one.
+		/// <para>This will remove all previous history!</para>
+		/// <para>Make sure the first message is a system prompt message.</para>
+		/// </summary>
+		/// <param name="new_history">The history to overwrite the current one with.</param>
+		void SetMessageHistory(const std::vector<Message>& new_history);
 
 		/// <summary>
 		/// Resets the message history to only contain the system prompt.

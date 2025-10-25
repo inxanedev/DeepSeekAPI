@@ -79,6 +79,11 @@ std::string inx::DeepSeek::API::GetSingleCompletion(Model model, const std::stri
 	return response;
 }
 
+void inx::DeepSeek::API::SetMessageHistory(const std::vector<Message>& new_history)
+{
+	History = new_history;
+}
+
 void inx::DeepSeek::API::ResetMessageHistory(std::optional<std::string> new_system_prompt)
 {
 	History.clear();
