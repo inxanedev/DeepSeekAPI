@@ -25,7 +25,7 @@ namespace inx::DeepSeek {
 		/// <param name="api_key">Your API key from https://platform.deepseek.com/api_keys</param>
 		/// <param name="model">The model to use for completions</param>
 		/// <param name="system_prompt">The system prompt (it will be added as the first system message)</param>
-		API(std::string_view api_key, Model model, std::string_view system_prompt);
+		API(std::string_view api_key, Model model = Model::DeepSeekChat, std::string_view system_prompt = "You are a helpful assistant");
 
 		/// <summary>
 		/// Performs a single blocking completion request to DeepSeek without creating an instance of the API class.
